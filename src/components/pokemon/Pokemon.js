@@ -324,13 +324,15 @@ export default function Pokemon(props) {
                       <h6 className="float-right">Height:</h6>
                     </div>
                     <div className="col-6">
-                      <h6 className="float-left">{pokemonStats.height} ft.</h6>
+                      <h6 className="float-left">{pokemonStats.height} Cm.</h6>
                     </div>
                     <div className="col-6">
                       <h6 className="float-right">Weight:</h6>
                     </div>
                     <div className="col-6">
-                      <h6 className="float-left">{pokemonStats.weight} lbs</h6>
+                      <h6 className="float-left">
+                        {pokemonStats.weight} gramas
+                      </h6>
                     </div>
                     <div className="col-6">
                       <h6 className="float-right">Catch Rate:</h6>
