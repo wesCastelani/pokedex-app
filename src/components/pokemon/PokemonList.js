@@ -1,39 +1,40 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PokemonCard from './PokemonCard';
 import axios from 'axios';
+import Pokemon from './Pokemon';
 
-export default class PokemonList extends Component {
-  state = {
-    url: 'https://pokeapi.co/api/v2/pokemon?limit=151&offset=0',
-    pokemon: null,
-  };
+//Url da PokeAPI pra pegar as informações
+const url = 'https://pokeapi.co/api/v2/pokemon?limit=151&offset=0';
 
-  async componentDidMount() {
-    const res = await axios.get(this.state.url);
-    this.setState({ pokemon: res.data['results'] });
-  }
+export default function PokemonList() {
+  const [pokemon, setPokemon] = useState([]);
 
-  render() {
-    return (
-      <React.Fragment>
-        {this.state.pokemon ? (
-          <div className="row">
-            {this.state.pokemon.map((pokemon) => (
-              <PokemonCard
-                key={pokemon.name}
-                url={pokemon.url}
-                name={pokemon.name}
-              />
-            ))}
+  //Requisitando as Informações para a API
+  useEffect(async () => {
+    const res = await axios.get(url);
+    const list = res.data.results;
+    setPokemon(list);
+  }, []);
+
+  return (
+    <React.Fragment>
+      {pokemon ? (
+        <div className="row">
+          {pokemon.map((pokemon) => (
+            <PokemonCard
+              key={pokemon.name}
+              url={pokemon.url}
+              name={pokemon.name}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center text-primary">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
           </div>
-        ) : (
-          <div class="text-center text-primary">
-            <div class="spinner-border" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-          </div>
-        )}
-      </React.Fragment>
-    );
-  }
+        </div>
+      )}
+    </React.Fragment>
+  );
 }
